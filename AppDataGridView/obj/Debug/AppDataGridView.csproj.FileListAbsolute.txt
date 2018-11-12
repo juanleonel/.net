@@ -1,0 +1,10 @@
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\bin\Debug\AppDataGridView.exe.config
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\bin\Debug\AppDataGridView.exe
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\bin\Debug\AppDataGridView.pdb
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.Form1.resources
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.Properties.Resources.resources
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.csproj.GenerateResource.cache
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.csproj.CoreCompileInputs.cache
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.exe
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.pdb
+C:\Users\Juan Leonel\source\repos\AppDataGridView\AppDataGridView\obj\Debug\AppDataGridView.csprojAssemblyReference.cache
