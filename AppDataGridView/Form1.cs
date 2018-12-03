@@ -33,21 +33,21 @@ namespace AppDataGridView
 
             // Here we add five DataRows.
             //             ID Producto Inventario  Cant_Consumido   Consumido  Cant_Abierto     Abierto
-            tabla.Rows.Add(1, "Cola",      0,           0,              1,          0,              0);
-            tabla.Rows.Add(1, "Cola",      0,           0,              1,          0,              1);
-            tabla.Rows.Add(1, "Cola",      0,           0,              1,          0,              1);
+            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 0);
+            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 1);
+            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 1);
 
-            tabla.Rows.Add(2, "Tequila",   0,           0,              1,          0,              0);
-            tabla.Rows.Add(2, "Tequila",   0,           0,              1,          0,              1);
-            tabla.Rows.Add(2, "Tequila",   0,           0,              1,          0,              1);
-            tabla.Rows.Add(2, "Tequila",   0,           0,              1,          0,              0);
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 0);
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 1);
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 1);
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 0);
 
-            tabla.Rows.Add(3, "Jugo",      0,           0,              1,          0,              1);
-            tabla.Rows.Add(3, "Jugo",      0,           0,              1,          0,              1);
-            
+            tabla.Rows.Add(3, "Jugo", 0, 0, 1, 0, 1);
+            tabla.Rows.Add(3, "Jugo", 0, 0, 1, 0, 1);
+
             var t = from row in tabla.AsEnumerable()
                     group row by row.Field<Int32>("ID") into pro
-                    orderby pro.Key
+                    orderby pro.Key, pro.Count()
                     select new
                     {
                         Accion = "+",
@@ -55,17 +55,25 @@ namespace AppDataGridView
                         Producto = pro.FirstOrDefault().Field<string>("Producto"),
                         Inventario = pro.Count(),
                         Cant_Consumido = pro.Count(x => x.Field<bool>("Consumido") == true),
-                        Cant_Abierto = pro.Count( x => x.Field<bool>("Abierto") == true )
+                        Cant_Abierto = pro.Count(x => x.Field<bool>("Abierto") == true)
                     };
+
+
             DataTable table = new DataTable();
             table = Utilities.ToDataTable(t.ToList());
 
-            tabla.Merge(table);
+
+
+            tabla.Merge(table, false, MissingSchemaAction.Add);
 
             DataView dv = tabla.DefaultView;
-            dv.Sort = "ID ASC";
+            dv.Sort = "ID ASC, Inventario DESC";
+
             tabla = dv.ToTable();
 
+            
+
+            
             dataGridView1.DataSource = tabla;
         }
 
@@ -134,7 +142,7 @@ namespace AppDataGridView
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
  
-            if (dataGridView1.Rows[e.RowIndex].Cells[7].Value != null && dataGridView1.Columns[e.ColumnIndex].Name == "Accion")
+            if (e.RowIndex != -1 && dataGridView1.Rows[e.RowIndex].Cells[7].Value != null && dataGridView1.Columns[e.ColumnIndex].Name == "Accion")
             {
                 int index = e.RowIndex;
 
