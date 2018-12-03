@@ -20,7 +20,7 @@ namespace AppDataGridView
         DataTable tabla = new DataTable("Costumers");
 
         void cargaTabla() {
-
+            
             tabla.Columns.Add("ID", typeof(int));
             tabla.Columns.Add("Producto", typeof(string));
             tabla.Columns.Add("Inventario", typeof(int));
@@ -31,20 +31,20 @@ namespace AppDataGridView
             tabla.Columns.Add("Cant_Abierto", typeof(int));
             tabla.Columns.Add("Abierto", typeof(bool));
 
-            //tabla.Columns.Add("Folios", typeof(string));
+            tabla.Columns.Add("Folios", typeof(string));
             // Here we add five DataRows.
             //             ID Producto Inventario  Cant_Consumido   Consumido  Cant_Abierto     Abierto
-            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 0);
-            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 1);
-            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 1);
+            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 0, "10010");
+            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 1, "10011");
+            tabla.Rows.Add(1, "Cola", 0, 0, 1, 0, 1, "10012");
 
-            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 0);
-            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 1);
-            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 1);
-            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 0);
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 0, "10013");
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 1, "10014");
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 1, "10015");
+            tabla.Rows.Add(2, "Tequila", 0, 0, 1, 0, 0, "10016");
 
-            tabla.Rows.Add(3, "Jugo", 0, 0, 1, 0, 1);
-            tabla.Rows.Add(3, "Jugo", 0, 0, 1, 0, 1);
+            tabla.Rows.Add(3, "Jugo", 0, 0, 1, 0, 1, "10017");
+            tabla.Rows.Add(3, "Jugo", 0, 0, 1, 0, 1, "10018");
 
             var t = from row in tabla.AsEnumerable()
                     group row by row.Field<Int32>("ID") into pro
@@ -55,9 +55,10 @@ namespace AppDataGridView
                         ID = pro.Key,
                         Producto = pro.FirstOrDefault().Field<string>("Producto"),
                         Inventario = pro.Count(),
+  
                         Cant_Consumido = pro.Count(x => x.Field<bool>("Consumido") == true),
                         Cant_Abierto = pro.Count(x => x.Field<bool>("Abierto") == true),
-                        //Folios  = pro.FirstOrDefault().Field<String>("Folios")
+                        Folios  = ( pro.FirstOrDefault().Field<String>("Folios") != null) ? "FOLIOS" : pro.FirstOrDefault().Field<String>("Folios")
                     };
 
 
@@ -157,7 +158,7 @@ namespace AppDataGridView
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
  
-            if (e.RowIndex != -1 && dataGridView1.Rows[e.RowIndex].Cells[7].Value != null && dataGridView1.Columns[e.ColumnIndex].Name == "Accion")
+            if (e.RowIndex != -1 && dataGridView1.Rows[e.RowIndex].Cells["Accion"].Value != null && dataGridView1.Columns[e.ColumnIndex].Name == "Accion")
             {
                 int index = e.RowIndex;
 
@@ -168,10 +169,10 @@ namespace AppDataGridView
 
                     //if (dataGridView1.Rows[row].Cells[7].ReadOnly != true)
                     //{
-                        if (dataGridView1.Rows[row].Cells[7].Value != null && !dataGridView1.Rows[row].Cells[7].Value.Equals("+"))
+                        if (dataGridView1.Rows[row].Cells["Accion"].Value != null && !dataGridView1.Rows[row].Cells["Accion"].Value.Equals("+"))
                         {
                             if (dataGridView1.Rows[row].Visible == false && dataGridView1.Rows[row].Cells[0].Value.ToString().Equals(ID)
-                                && dataGridView1.Rows[row].Cells[7].Style.BackColor != Color.DarkGray)
+                                && dataGridView1.Rows[row].Cells["Accion"].Style.BackColor != Color.DarkGray)
                             {
                                 dataGridView1.CurrentCell = null;
                                 dataGridView1.Rows[row].Visible = true;
@@ -182,7 +183,7 @@ namespace AppDataGridView
                             }
                             else if (dataGridView1.Rows[row].Visible == true && 
                                     dataGridView1.Rows[row].Cells[0].Value.ToString().Equals(ID)
-                                    && dataGridView1.Rows[index].Cells[7].Style.BackColor == Color.DarkGray ){ 
+                                    && dataGridView1.Rows[index].Cells["Accion"].Style.BackColor == Color.DarkGray ){ 
 
                                     dataGridView1.CurrentCell = null;
                                     dataGridView1.Rows[row].Visible = false;
